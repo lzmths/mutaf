@@ -2,3 +2,9 @@ bin/
 .project
 .classpath
 .settings/
+
+.idea/
+*.iml
+.gradle
+
+*~
