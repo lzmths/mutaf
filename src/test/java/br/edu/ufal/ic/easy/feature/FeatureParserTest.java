@@ -1,4 +1,4 @@
-package br.ufal.edu.ic.easy.feature.test;
+package br.edu.ufal.ic.easy.feature;
 
 import static org.junit.Assert.*;
 
