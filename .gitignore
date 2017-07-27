@@ -5,3 +5,6 @@ bin/
 
 .idea/
 *.iml
+.gradle
+
+*~

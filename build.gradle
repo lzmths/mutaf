@@ -1,4 +1,4 @@
-group 'br.ufal.edu.ic.easy'
+group 'br.edu.ufal.ic.easy'
 version '0.0.0'
 
 apply plugin: 'groovy'
