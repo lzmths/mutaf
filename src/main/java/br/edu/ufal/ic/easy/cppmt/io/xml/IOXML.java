@@ -63,8 +63,9 @@ public class IOXML {
 				br.flush();
 				
 				GenerationC generationC = new GenerationC();
-				generationC.convertsFromXML(fileXML);
+				File cFile = generationC.convertsFromXML(fileXML);
 				fileXML.deleteOnExit();
+				return cFile;
 			} catch (TransformerConfigurationException
 					| TransformerFactoryConfigurationError e) {
 				e.printStackTrace();
@@ -75,7 +76,7 @@ public class IOXML {
 		  } catch (IOException e) {
 			e.printStackTrace();
 		  }
-		  return new File(filePathXML);
+		return null;
 	}
 	
 	/**

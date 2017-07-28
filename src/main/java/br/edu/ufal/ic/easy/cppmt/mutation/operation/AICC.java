@@ -13,35 +13,35 @@ import br.edu.ufal.ic.easy.cppmt.mutation.operation.util.AddCppAroundCode;
 import br.edu.ufal.ic.easy.cppmt.util.xml.DocumentClone;
 
 /**
- *
  * @author Luiz Carvalho
- * ACFD - Add Condition to Feature Definition
+ * 
+ * AICC - Adding ifdef Condition around Code
  *
  */
-public class ACFD implements MutationOperator {
-
+public class AICC implements MutationOperator {
+	
 	@Override
 	public List<Document> run(Document document) {
 		Document originalDocument = DocumentClone.clone(document);
 		FeatureParser fParser = new FeatureParser();
 		List<String> features = fParser.parser(document);
 		List<Document> lDocument = new ArrayList<Document>();
+		final int size = document.getDocumentElement().getElementsByTagName("function").getLength();
 		AddCppAroundCode add = new AddCppAroundCode();
-		final int size = document.getDocumentElement().getElementsByTagName("cpp:define").getLength();
 		final int cppSize = 2;
 		final int ifdef = 0;
 		for (int i = 0; i < size; ++i) {
 			for (int j = 0; j < features.size(); ++j) {
 				for (int k = 0; k < cppSize; ++k) {
 					String featureStr = features.get(j);
-					NodeList nList = document.getDocumentElement().getElementsByTagName("cpp:define");
+					NodeList nList = document.getDocumentElement().getElementsByTagName("function");
 					Node currentNode = nList.item(i);
 					Node sibling = currentNode.getNextSibling();
 					if (sibling == null) continue;
 					if (k == ifdef) {
-						add.createIfdef(featureStr, currentNode, document); 
+						add.createIfdef(featureStr, currentNode, document);
 					} else {
-						add.createIfndef(featureStr, currentNode, document); 
+						add.createIfndef(featureStr, currentNode, document);
 					}
 					add.createEndif(nList, sibling, document);
 					lDocument.add(document);
@@ -54,7 +54,7 @@ public class ACFD implements MutationOperator {
 
 	@Override
 	public String getName() {
-		return "ACFD";
+		return "AICC";
 	}
 
 }

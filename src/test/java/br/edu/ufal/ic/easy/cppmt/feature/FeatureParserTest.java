@@ -11,6 +11,11 @@ import org.w3c.dom.Document;
 
 import br.edu.ufal.ic.easy.cppmt.io.xml.IOXML;
 
+/**
+ * 
+ * @author Luiz Carvalho
+ *
+ */
 public class FeatureParserTest {
 
 	@Test

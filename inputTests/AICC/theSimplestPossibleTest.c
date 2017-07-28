@@ -1,0 +1,5 @@
+#define A
+
+void main() {
+
+}
