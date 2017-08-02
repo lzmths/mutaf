@@ -19,7 +19,7 @@ import br.edu.ufal.ic.easy.cppmt.util.xml.DocumentClone;
  *  It is the implementation
  *
  */
-public class RNID implements MutationOperator{
+public class RNID implements MutationOperator {
 	
 	@Override
 	public List<Document> run(Document document) {
