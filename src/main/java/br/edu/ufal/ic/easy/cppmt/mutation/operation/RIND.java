@@ -8,6 +8,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import br.edu.ufal.ic.easy.cppmt.mutation.Mutation;
 import br.edu.ufal.ic.easy.cppmt.mutation.MutationOperator;
 import br.edu.ufal.ic.easy.cppmt.util.xml.DocumentClone;
 
@@ -23,8 +24,8 @@ import br.edu.ufal.ic.easy.cppmt.util.xml.DocumentClone;
 public class RIND implements MutationOperator {
 	
 	@Override
-	public List<Document> run(Document document) {
-		List<Document> lDocument = new ArrayList<Document>();
+	public List<Mutation> run(Document document) {
+		List<Mutation> lDocument = new ArrayList<Mutation>();
 		Document originalDocument = DocumentClone.clone(document);
 		
 		final int size = originalDocument.getDocumentElement().getElementsByTagName("cpp:ifdef").getLength();
@@ -39,7 +40,7 @@ public class RIND implements MutationOperator {
 					Node nDirective = nlDirectives.item(0);
 					nDirective.setTextContent("ifndef");
 				}
-				lDocument.add(document);
+				lDocument.add(new Mutation(document, originalDocument, this, i));
 				document = DocumentClone.clone(originalDocument);
 			}
 		}	

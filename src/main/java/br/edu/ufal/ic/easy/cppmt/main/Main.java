@@ -6,6 +6,7 @@ import java.util.List;
 
 import br.edu.ufal.ic.easy.cppmt.io.xml.IOXML;
 import br.edu.ufal.ic.easy.cppmt.menu.Menu;
+import br.edu.ufal.ic.easy.cppmt.mutation.Mutation;
 import br.edu.ufal.ic.easy.cppmt.mutation.MutationOperationException;
 import br.edu.ufal.ic.easy.cppmt.mutation.MutationOperationList;
 import br.edu.ufal.ic.easy.cppmt.mutation.MutationOperationRunner;
@@ -26,8 +27,8 @@ public class Main {
 			mOpList.setMutationsOperationsNames(mutationsOperationsNames);
 			MutationOperationRunner mutationOperationRunner = new MutationOperationRunner(mOpList);
 			try {
-				List<Document> mutations = mutationOperationRunner.runTo(document);
-				for (Document m : mutations) {
+				List<Mutation> mutations = mutationOperationRunner.runTo(document);
+				for (Mutation m : mutations) {
 					io.write(new File(fileToPath), m);
 				}
 			} catch (MutationOperationException e) {

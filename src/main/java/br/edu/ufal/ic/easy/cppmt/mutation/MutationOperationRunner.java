@@ -31,16 +31,16 @@ public class MutationOperationRunner {
 	}
 	
 	/**
-	 * 
-	 * @param element will be mutated by mutation by operation list 
+	 * Run mutations
+	 * @param document element will be mutated by mutation by operation list 
 	 * @return mutations
 	 * @throws MutationOperationException
 	 */
-	public List<Document> runTo(Document document) throws MutationOperationException {
-		List<Document> mutationsAll = new ArrayList<Document>();
+	public List<Mutation> runTo(Document document) throws MutationOperationException {
+		List<Mutation> mutationsAll = new ArrayList<Mutation>();
 		while (this.mOperationSelector.hasNext()) {
 			MutationOperator mutationOperator = this.mOperationSelector.next();
-			List<Document> mutations = mutationOperator.run(DocumentClone.clone(document));
+			List<Mutation> mutations = mutationOperator.run(DocumentClone.clone(document));
 			mutationsAll.addAll(mutations);
 			System.out.println("Runned: " + mutationOperator.getName());
 		}

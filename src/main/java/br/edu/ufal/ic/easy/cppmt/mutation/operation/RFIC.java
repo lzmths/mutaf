@@ -7,6 +7,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import br.edu.ufal.ic.easy.cppmt.mutation.Mutation;
 import br.edu.ufal.ic.easy.cppmt.mutation.MutationOperator;
 import br.edu.ufal.ic.easy.cppmt.util.xml.DocumentClone;
 
@@ -20,17 +21,18 @@ import br.edu.ufal.ic.easy.cppmt.util.xml.DocumentClone;
 public class RFIC implements MutationOperator {
 
 	@Override
-	public List<Document> run(Document document) {
+	public List<Mutation> run(Document document) {
 		Document originalDocument = DocumentClone.clone(document);
-		List<Document> result = new ArrayList<Document>();
+		List<Mutation> result = new ArrayList<Mutation>();
 		NodeList lNodes = document.getDocumentElement().getElementsByTagName("cpp:if");
+		long id = 1;
 		for (int i = 0; i < lNodes.getLength(); ++i) {
 			Node ifNode = lNodes.item(i);
 			NodeList lIfChildNodes = ifNode.getChildNodes();
 			for (int j = 0; j < lIfChildNodes.getLength(); ++j) {
 				if (lIfChildNodes.item(j).getNodeName().equals("expr")) {
 					searchAndRemove(document, lIfChildNodes.item(j));
-					result.add(document);
+					result.add(new Mutation(document, originalDocument, this, id++));
 					document = DocumentClone.clone(originalDocument);
 					lNodes = document.getDocumentElement().getElementsByTagName("cpp:if");
 					break;

@@ -7,6 +7,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import br.edu.ufal.ic.easy.cppmt.mutation.Mutation;
 import br.edu.ufal.ic.easy.cppmt.mutation.MutationOperator;
 import br.edu.ufal.ic.easy.cppmt.util.xml.DocumentClone;
 
@@ -67,8 +68,8 @@ public class RCIB implements MutationOperator {
 	}
 	
 	@Override
-	public List<Document> run(Document document) {
-		List<Document> result = new ArrayList<Document>();
+	public List<Mutation> run(Document document) {
+		List<Mutation> result = new ArrayList<Mutation>();
 		Document originalDocument = DocumentClone.clone(document);
 		final int ifdefAndIfndefSize = document.getDocumentElement().getElementsByTagName("cpp:ifdef").getLength() 
 				+ document.getDocumentElement().getElementsByTagName("cpp:ifndef").getLength();		
@@ -77,7 +78,7 @@ public class RCIB implements MutationOperator {
 			this.endifCount = 0;
 			this.selectedIfdefAndIfndef = i + 1;
 			if (removeIfdefAndIfndefBlock(document.getFirstChild())) {
-				result.add(document);
+				result.add(new Mutation(document, originalDocument, this, i));
 				document = DocumentClone.clone(originalDocument);
 			} else {
 				break;

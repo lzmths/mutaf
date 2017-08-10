@@ -18,7 +18,7 @@ public interface MutationOperator {
 	 * @param document
 	 * @return mutants
 	 */
-	public List<Document> run(Document document);
+	public List<Mutation> run(Document document);
 	
 	/**
 	 * Return mutation operator name

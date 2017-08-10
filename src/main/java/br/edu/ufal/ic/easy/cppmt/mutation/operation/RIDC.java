@@ -7,6 +7,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import br.edu.ufal.ic.easy.cppmt.mutation.Mutation;
 import br.edu.ufal.ic.easy.cppmt.mutation.MutationOperator;
 import br.edu.ufal.ic.easy.cppmt.util.xml.DocumentClone;
 
@@ -70,8 +71,8 @@ public class RIDC implements MutationOperator {
 	}
 
 	@Override
-	public List<Document> run(Document originalDocument) {
-		List<Document> lDocument = new ArrayList<Document>();
+	public List<Mutation> run(Document originalDocument) {
+		List<Mutation> lDocument = new ArrayList<Mutation>();
 		final int ifdefAndIfndefSize = originalDocument.getDocumentElement().getElementsByTagName("cpp:ifdef").getLength() + 
 				originalDocument.getDocumentElement().getElementsByTagName("cpp:ifndef").getLength();
 		final int endifSize = originalDocument.getDocumentElement().getElementsByTagName("cpp:endif").getLength();
@@ -89,7 +90,7 @@ public class RIDC implements MutationOperator {
 			this.endifCount = 0;
 			this.ifdefSelected = startIfdefSelected + i;
 			if (removeIfdefOrIfndef(document, document.getFirstChild(), false)) {
-				lDocument.add(document);
+				lDocument.add(new Mutation(document, originalDocument, this, i));
 				document = DocumentClone.clone(originalDocument);;
 			} else {
 				return lDocument;

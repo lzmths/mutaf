@@ -11,6 +11,7 @@ import java.util.List;
 import org.w3c.dom.Document;
 
 import br.edu.ufal.ic.easy.cppmt.io.xml.IOXML;
+import br.edu.ufal.ic.easy.cppmt.mutation.Mutation;
 import br.edu.ufal.ic.easy.cppmt.mutation.MutationOperator;
 
 /**
@@ -33,8 +34,8 @@ public class UsefulForTesting {
 		IOXML io = new IOXML();
 		List<String> result = new ArrayList<String>();
 		Document doc = io.read(file);
-		List<Document> mts = mOperator.run(io.read(file));
-		for (Document mutation : mts) {
+		List<Mutation> mts = mOperator.run(io.read(file));
+		for (Mutation mutation : mts) {
 			File mtResultFile = io.write(file, mutation);
 			BufferedReader brMt = new BufferedReader(new FileReader(mtResultFile));
 			String line, mtStr;

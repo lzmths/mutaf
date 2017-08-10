@@ -20,10 +20,12 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import br.edu.ufal.ic.easy.cppmt.generation.GenerationC;
+
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import br.edu.ufal.ic.easy.cppmt.generation.GenerationXML;
+import br.edu.ufal.ic.easy.cppmt.mutation.Mutation;
 
 /**
  * Read file in C and use GenerationXML to create a XML element
@@ -41,10 +43,10 @@ public class IOXML {
 	 * @param mutation
 	 * @return xml file 
 	 */
-	public File write(File file, Document mutation) {
+	public File write(File file, Mutation mutation) {
 		Random random = new Random();
 		String filePathC = file.getAbsolutePath();
-		String filePathXML = filePathC.replace(".c", random.nextInt(Integer.MAX_VALUE) + ".xml");
+		String filePathXML = filePathC.replace(".c", "_" + mutation.getMutationOperationName() + "_" + mutation.getId() + ".xml");
 		File fileXML = new File(filePathXML);
 		if (new File(filePathXML).exists()) return write(file, mutation);
 		try (BufferedWriter br = new BufferedWriter(new FileWriter(fileXML))) {
@@ -55,7 +57,7 @@ public class IOXML {
 				transformer.setOutputProperty(OutputKeys.INDENT, "not");
 						
 				StreamResult result = new StreamResult(new StringWriter());
-				DOMSource source = new DOMSource(mutation);
+				DOMSource source = new DOMSource(mutation.getDocument());
 				transformer.transform(source, result);
 				
 				String xmlString = result.getWriter().toString();
@@ -65,6 +67,7 @@ public class IOXML {
 				GenerationC generationC = new GenerationC();
 				File cFile = generationC.convertsFromXML(fileXML);
 				fileXML.deleteOnExit();
+				mutation.setFile(cFile);
 				return cFile;
 			} catch (TransformerConfigurationException
 					| TransformerFactoryConfigurationError e) {

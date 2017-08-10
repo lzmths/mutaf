@@ -9,6 +9,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import br.edu.ufal.ic.easy.cppmt.feature.FeatureParser;
+import br.edu.ufal.ic.easy.cppmt.mutation.Mutation;
 import br.edu.ufal.ic.easy.cppmt.mutation.MutationOperator;
 import br.edu.ufal.ic.easy.cppmt.util.xml.DocumentClone;
 
@@ -39,18 +40,19 @@ public class AFIC implements MutationOperator {
 	}
 	
 	@Override
-	public List<Document> run(Document document) {
-		List<Document> result = new ArrayList<Document>();
+	public List<Mutation> run(Document document) {
+		List<Mutation> result = new ArrayList<Mutation>();
 		List<String> features = new FeatureParser().parser(document);
 		Document originalDocument = DocumentClone.clone(document);
 		NodeList nList = document.getDocumentElement().getElementsByTagName("cpp:if");
+		long id = 1;
 		for (int i = 0; i < nList.getLength(); ++i) {
 			for (int j = 0; j < features.size(); ++j) {
 				Node currentNode = nList.item(i);
 				Node exprNode = this.getChildWithName("expr", currentNode);
 				exprNode.appendChild(createNode("operator", " && ", document));
 				exprNode.appendChild(createCallNode(document, features.get(i)));
-				result.add(document);
+				result.add(new Mutation(document, originalDocument, this, id++));
 				document = DocumentClone.clone(originalDocument);
 				nList = document.getDocumentElement().getElementsByTagName("cpp:if");
 			}
