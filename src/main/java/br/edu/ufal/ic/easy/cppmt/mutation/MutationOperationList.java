@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import br.edu.ufal.ic.easy.cppmt.mutation.operation.ACFD;
+import br.edu.ufal.ic.easy.cppmt.mutation.operation.AFIC;
 import br.edu.ufal.ic.easy.cppmt.mutation.operation.AICC;
 import br.edu.ufal.ic.easy.cppmt.mutation.operation.RCFD;
 import br.edu.ufal.ic.easy.cppmt.mutation.operation.RCIB;
@@ -49,6 +50,8 @@ public class MutationOperationList implements Iterator<MutationOperator> {
 				lMutationsOperators[index++] = new RFIC();
 			} else if (mutationOp.equals("RCIB")) {
 				lMutationsOperators[index++] = new RCIB();
+			} else if (mutationOp.equals("AFIC")) {
+				lMutationsOperators[index++] = new AFIC();
 			}
 		}
 	}
