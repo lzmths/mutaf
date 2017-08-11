@@ -1,18 +1,6 @@
 {
-  "combinations": [
-    [],
-    [
-      "B"
-    ],
-    [
-      "A"
-    ],
-    [
-      "B",
-      "A"
-    ]
-  ],
-  "enoughCombinations": [
+  "changes": "--- \n+++ \n@@ -5 +5 @@\n-#ifdef B\n+#ifndef B\n",
+  "enoughImpactedFeaturesCombinations": [
     [
       "A"
     ],
@@ -29,8 +17,22 @@
     "B",
     "A"
   ],
+  "impactedFeaturesCombinations": [
+    [],
+    [
+      "B"
+    ],
+    [
+      "A"
+    ],
+    [
+      "B",
+      "A"
+    ]
+  ],
   "newFile": "/tmp/input_RIND_2.c",
   "oldFile": "/tmp/input.c",
-  "totalCombinations": 4,
-  "totalEnoughCombinations": 2
+  "totalEnoughImpactedFeaturesCombinations": 2,
+  "totalFeatureCombinations": 4,
+  "totalImpactedFeaturesCombinations": 4
 }

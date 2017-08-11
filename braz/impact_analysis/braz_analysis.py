@@ -1,7 +1,7 @@
 import re
 
-from impact_analysis.utils import append_if_not_in
-from impact_analysis.diff import changed_lines
+from evaluation.diff import changed_lines
+from utils.utils import append_if_not_in
 
 
 class AnalysisResult:
@@ -21,7 +21,7 @@ class Braz:
         self.old_file = old_file
         self.new_file = new_file
 
-    def run(self, verbose=False):
+    def _run(self):
         result = AnalysisResult()
 
         result.changed_lines = changed_lines(self.old_file, self.new_file)
@@ -29,10 +29,36 @@ class Braz:
         self._get_all_macros(result)
         self._get_changed_macros(result)
 
+        return result
+
+    def _run_no_reverse(self, verbose=False):
+        result = self._run()
+
         if verbose:
             self._verbose(result)
 
         return result
+
+    def run(self, verbose=False):
+        result = self._run()
+
+        self._union_with_reverse_analysis(result)
+
+        if verbose:
+            self._verbose(result)
+
+        return result
+
+    def _union_with_reverse_analysis(self, result):
+        reverse_analysis = Braz(self.new_file, self.old_file)._run_no_reverse()
+        result.all_macros = append_if_not_in(
+            from_list=reverse_analysis.all_macros,
+            to_list=result.all_macros
+        )
+        result.impacted_macros = append_if_not_in(
+            from_list=reverse_analysis.impacted_macros,
+            to_list=result.impacted_macros
+        )
 
     def _find_macro_lines(self, file, result):
         stack_macros = []

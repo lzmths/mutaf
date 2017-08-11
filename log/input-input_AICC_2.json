@@ -1,34 +1,6 @@
 {
-  "combinations": [
-    [],
-    [
-      "D"
-    ],
-    [
-      ""
-    ],
-    [
-      "A"
-    ],
-    [
-      "D",
-      ""
-    ],
-    [
-      "D",
-      "A"
-    ],
-    [
-      "",
-      "A"
-    ],
-    [
-      "D",
-      "",
-      "A"
-    ]
-  ],
-  "enoughCombinations": [
+  "changes": "--- \n+++ \n@@ -3,0 +4 @@\n+#ifndef D \n@@ -8,0 +10 @@\n+#endif\n",
+  "enoughImpactedFeaturesCombinations": [
     [
       ""
     ],
@@ -64,8 +36,38 @@
     "",
     "A"
   ],
+  "impactedFeaturesCombinations": [
+    [],
+    [
+      "D"
+    ],
+    [
+      ""
+    ],
+    [
+      "A"
+    ],
+    [
+      "D",
+      ""
+    ],
+    [
+      "D",
+      "A"
+    ],
+    [
+      "",
+      "A"
+    ],
+    [
+      "D",
+      "",
+      "A"
+    ]
+  ],
   "newFile": "/tmp/input_AICC_2.c",
   "oldFile": "/tmp/input.c",
-  "totalCombinations": 8,
-  "totalEnoughCombinations": 6
+  "totalEnoughImpactedFeaturesCombinations": 6,
+  "totalFeatureCombinations": 16,
+  "totalImpactedFeaturesCombinations": 8
 }

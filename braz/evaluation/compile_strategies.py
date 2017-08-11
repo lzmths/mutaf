@@ -28,7 +28,7 @@ def _compile(diff, files, command, path):
     return diff(object_files[0], object_files[1])
 
 
-def compile_to_binary(diff, files, params, path=''):
+def compile_for_tce(diff, files, params, path=''):
     gcc_cmd = 'gcc ' + params + OPTIMIZATION + ' -s %s -o %s'
     return _compile(diff, files, gcc_cmd, path)
 

@@ -1,5 +1,16 @@
 {
-  "combinations": [
+  "changes": "--- \n+++ \n@@ -12 +12 @@\n-#if defined(A)\n+#if defined(A) && defined(D)\n",
+  "enoughImpactedFeaturesCombinations": [],
+  "features": [
+    "B",
+    "A",
+    "D"
+  ],
+  "impactedFeatures": [
+    "A",
+    "D"
+  ],
+  "impactedFeaturesCombinations": [
     [],
     [
       "A"
@@ -12,18 +23,9 @@
       "D"
     ]
   ],
-  "enoughCombinations": [],
-  "features": [
-    "B",
-    "A",
-    "D"
-  ],
-  "impactedFeatures": [
-    "A",
-    "D"
-  ],
   "newFile": "/tmp/input_AFIC_1.c",
   "oldFile": "/tmp/input.c",
-  "totalCombinations": 4,
-  "totalEnoughCombinations": 0
+  "totalEnoughImpactedFeaturesCombinations": 0,
+  "totalFeatureCombinations": 8,
+  "totalImpactedFeaturesCombinations": 4
 }

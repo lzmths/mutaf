@@ -1,13 +1,13 @@
-import sys
-import shutil
-import os
 import json
+import os
+import shutil
+import sys
 
-from evaluation.evaluation_executor import EvaluationExecutor
-from evaluation.combination_runner import CombinationRunner
 from evaluation import diff_strategies, compile_strategies, combination_strategies
+from evaluation.combination_runner import CombinationRunner
+from evaluation.diff import get_changes
+from evaluation.evaluation_executor import EvaluationExecutor
 from impact_analysis.braz_analysis import Braz
-
 
 PROGRAM_NAME = 'impact'
 
@@ -39,7 +39,7 @@ def print_help():
     sys.exit(0)
 
 
-def write_abstract(path):
+def write_abstract(path, changes):
     filename = path + '.json'
     log_dir = 'log'
     all_combinations = [list(combination) for combination in runner.combinations]
@@ -47,12 +47,14 @@ def write_abstract(path):
     abstract = {
         'oldFile': old_file,
         'newFile': new_file,
+        'changes': changes,
         'features': analysis_result.all_macros,
         'impactedFeatures': analysis_result.impacted_macros,
-        'combinations': all_combinations,
-        'totalCombinations': len(all_combinations),
-        'enoughCombinations': result,
-        'totalEnoughCombinations': len(result)
+        'impactedFeaturesCombinations': all_combinations,
+        'totalImpactedFeaturesCombinations': len(all_combinations),
+        'enoughImpactedFeaturesCombinations': result,
+        'totalEnoughImpactedFeaturesCombinations': len(result),
+        'totalFeatureCombinations': 2 ** len(analysis_result.all_macros)
     }
 
     if os.path.isfile(filename):
@@ -92,8 +94,8 @@ if __name__ == "__main__":
         result_path = (old_file.split('/')[-1] + '-' + new_file.split('/')[-1]).replace('.c', '')
 
         evaluation_executor = EvaluationExecutor(
-            compile_strategy=compile_strategies.compile_preprocessor_only,
-            diff_strategy=diff_strategies.diff_preprocessor_out,
+            compile_strategy=compile_strategies.compile_for_tce,
+            diff_strategy=diff_strategies.diff_for_tce,
             path=result_path,
         )
 
@@ -105,5 +107,5 @@ if __name__ == "__main__":
 
         result = runner.run_and_clean([sys.argv[1], sys.argv[2]])
 
-        write_abstract(result_path)
+        write_abstract(result_path, get_changes(old_code, new_code))
         format_output(result)

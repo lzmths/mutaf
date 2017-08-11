@@ -1,18 +1,6 @@
 {
-  "combinations": [
-    [],
-    [
-      "D"
-    ],
-    [
-      ""
-    ],
-    [
-      "D",
-      ""
-    ]
-  ],
-  "enoughCombinations": [
+  "changes": "--- \n+++ \n@@ -10,0 +11 @@\n+#ifdef D \n@@ -15,0 +17 @@\n+#endif\n",
+  "enoughImpactedFeaturesCombinations": [
     [
       ""
     ],
@@ -31,8 +19,22 @@
     "D",
     ""
   ],
+  "impactedFeaturesCombinations": [
+    [],
+    [
+      "D"
+    ],
+    [
+      ""
+    ],
+    [
+      "D",
+      ""
+    ]
+  ],
   "newFile": "/tmp/input_AICC_3.c",
   "oldFile": "/tmp/input.c",
-  "totalCombinations": 4,
-  "totalEnoughCombinations": 2
+  "totalEnoughImpactedFeaturesCombinations": 2,
+  "totalFeatureCombinations": 16,
+  "totalImpactedFeaturesCombinations": 4
 }

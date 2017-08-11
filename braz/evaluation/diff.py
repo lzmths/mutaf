@@ -1,6 +1,6 @@
-from difflib import SequenceMatcher
+from difflib import SequenceMatcher, unified_diff
 
-from impact_analysis.utils import append_if_not_in
+from utils.utils import append_if_not_in
 
 
 def _interval_lines(start, stop):
@@ -19,3 +19,12 @@ def changed_lines(a, b):
         append_if_not_in(result, lines)
 
     return result
+
+
+def get_changes(a, b):
+    changes = ''
+
+    for d in unified_diff(a, b, n=0):
+        changes += d
+
+    return changes

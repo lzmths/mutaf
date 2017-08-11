@@ -16,7 +16,7 @@ def _diff(command_line):
         return False
 
 
-def diff_binary(a, b):
+def diff_for_tce(a, b):
     return _diff("diff --binary " + a + " " + b)
 
 
