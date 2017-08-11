@@ -70,4 +70,26 @@ public class RIDCTest {
 			fail("Get exception");
 		}
 	}
+	
+	@Test
+	public void elifAndIfdefinedTest() {
+		File fileToTest = new File("inputTests/RIDC/elifAndIfdefinedTest.c");
+		File outputToTest = new File("outputTests/RIDC/elifAndIfdefinedTest");
+		try {
+			List<String> mutants = util.runMutationOperator(fileToTest, new RIDC());
+			List<String> expectedResult = util.getContentFromFolder(outputToTest);
+			if (mutants.isEmpty()) {
+				fail("There is not mutants");
+			} else if (expectedResult.isEmpty()) {
+				fail("Tehre is not expected results");
+			}
+			int i = 0;
+			for (String mutantResult : mutants) {
+				assertEquals(expectedResult.get(i++), mutantResult);			
+			}
+		} catch (IOException e) {
+			System.out.println(e.toString());
+			fail("Get exception");
+		}
+	}
 }

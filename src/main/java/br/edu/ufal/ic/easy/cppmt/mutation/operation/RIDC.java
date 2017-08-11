@@ -17,12 +17,12 @@ import br.edu.ufal.ic.easy.cppmt.util.xml.DocumentClone;
  * RIDC - Remove ifdef Condition.
  * Moreover 
  *  1) Remove 'ifndef'
- *  2) Remove 'else' condition when associated with 'ifdef' or 'ifndef'
- *
+ *  2) Remove 'if'
+ *  3) Remove 'else' and 'else' condition when associated with 'ifdef' or 'ifndef'
  */
 public class RIDC implements MutationOperator {
 
-	private int ifdefOrIfndefCount;
+	private int ifdefOrIfndefOrIfCount;
 	private int endifCount;
 	private int elseCount;
 	private int ifdefSelected;
@@ -37,28 +37,33 @@ public class RIDC implements MutationOperator {
 		NodeList childNodes = currentNode.getChildNodes();
 		for (int i = 0; i < childNodes.getLength(); ++i) {
 			Node childNode = childNodes.item(i);
-			if (childNode.getNodeName().equals("cpp:ifdef") || childNode.getNodeName().equals("cpp:ifndef")) {
-				++this.ifdefOrIfndefCount;
-				if (this.ifdefSelected == this.ifdefOrIfndefCount) {
+			String childNodeName = childNode.getNodeName();
+			if (childNodeName.equals("cpp:ifdef") || childNodeName.equals("cpp:ifndef") || childNodeName.equals("cpp:if")) {
+				++this.ifdefOrIfndefOrIfCount;
+				if (this.ifdefSelected == this.ifdefOrIfndefOrIfCount) {
 					removeNode(childNode);
-					this.endifCount = this.ifdefOrIfndefCount - 1;
+					this.endifCount = this.ifdefOrIfndefOrIfCount - 1;
 					this.elseCount = endifCount;
 				}
-			} else if (childNode.getNodeName().equals("cpp:endif")) {
+			} else if (childNodeName.equals("cpp:endif")) {
 				++this.endifCount;
-				if (this.endifCount > this.ifdefOrIfndefCount) {
+				if (this.endifCount > this.ifdefOrIfndefOrIfCount) {
 					System.err.println("There is more #endif than #ifdef");
 					return false;
-				} else if (this.ifdefOrIfndefCount == this.endifCount && this.ifdefSelected <= this.ifdefOrIfndefCount) {
+				} else if (this.ifdefOrIfndefOrIfCount == this.endifCount && this.ifdefSelected <= this.ifdefOrIfndefOrIfCount) {
 					removeNode(childNode);
 					return true;
 				}
-			} else if (childNode.getNodeName().equals("cpp:else")) {
+			} else if (childNodeName.equals("cpp:else")) {
 				++this.elseCount;
-				if (this.elseCount > this.ifdefOrIfndefCount) {
+				if (this.elseCount > this.ifdefOrIfndefOrIfCount) {
 					System.err.println("There is more #else than #ifdef");
 					return false;
-				} else if (this.ifdefOrIfndefCount == this.elseCount && this.ifdefSelected <= this.ifdefOrIfndefCount) {
+				} else if (this.ifdefOrIfndefOrIfCount == this.elseCount && this.ifdefSelected <= this.ifdefOrIfndefOrIfCount) {
+					removeNode(childNode);
+				}
+			} else if (childNodeName.equals("cpp:elif")) {
+				if ((this.ifdefOrIfndefOrIfCount - 1) == this.endifCount && this.ifdefSelected <= this.ifdefOrIfndefOrIfCount) {
 					removeNode(childNode);
 				}
 			} else {
@@ -74,7 +79,8 @@ public class RIDC implements MutationOperator {
 	public List<Mutation> run(Document originalDocument) {
 		List<Mutation> lDocument = new ArrayList<Mutation>();
 		final int ifdefAndIfndefSize = originalDocument.getDocumentElement().getElementsByTagName("cpp:ifdef").getLength() + 
-				originalDocument.getDocumentElement().getElementsByTagName("cpp:ifndef").getLength();
+				originalDocument.getDocumentElement().getElementsByTagName("cpp:ifndef").getLength() + 
+				originalDocument.getDocumentElement().getElementsByTagName("cpp:if").getLength();
 		final int endifSize = originalDocument.getDocumentElement().getElementsByTagName("cpp:endif").getLength();
 		final int startIfdefSelected = 1;
 		
@@ -85,7 +91,7 @@ public class RIDC implements MutationOperator {
 		
 		for (int i = 0; i < ifdefAndIfndefSize; ++i) {
 			Document document = DocumentClone.clone(originalDocument);
-			this.ifdefOrIfndefCount = 0;
+			this.ifdefOrIfndefOrIfCount = 0;
 			this.elseCount = 0;
 			this.endifCount = 0;
 			this.ifdefSelected = startIfdefSelected + i;
