@@ -22,6 +22,11 @@ import br.edu.ufal.ic.easy.cppmt.util.xml.DocumentClone;
  */
 public class AFIC implements MutationOperator {
 
+	@Override
+	public String getInfo() {
+		return "Add";
+	}
+	
 	/**
 	 * Get child with name from node
 	 * @param name name

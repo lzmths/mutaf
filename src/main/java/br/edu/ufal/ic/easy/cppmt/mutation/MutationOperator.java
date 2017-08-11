@@ -14,6 +14,11 @@ import org.w3c.dom.Document;
 public interface MutationOperator {
 
 	/**
+	 * Get info like Mutation operation add, eplace or remove.
+	 */
+	public String getInfo();
+	
+	/**
 	 * Execute the mutation Operator
 	 * @param document
 	 * @return mutants

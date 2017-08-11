@@ -23,6 +23,11 @@ import br.edu.ufal.ic.easy.cppmt.util.xml.DocumentClone;
 public class RNID implements MutationOperator {
 	
 	@Override
+	public String getInfo() {
+		return "Replace";
+	}
+	
+	@Override
 	public List<Mutation> run(Document document) {
 		List<Mutation> lDocument = new ArrayList<Mutation>();
 		Document originalDocument = DocumentClone.clone(document);

@@ -1,0 +1,42 @@
+{
+  "combinations": [
+    [],
+    [
+      "D"
+    ],
+    [
+      ""
+    ],
+    [
+      "D",
+      ""
+    ]
+  ],
+  "enoughCombinations": [
+    [],
+    [
+      "D"
+    ],
+    [
+      ""
+    ],
+    [
+      "D",
+      ""
+    ]
+  ],
+  "features": [
+    "B",
+    "A",
+    "D",
+    ""
+  ],
+  "impactedFeatures": [
+    "D",
+    ""
+  ],
+  "newFile": "/tmp/input_AICC_4.c",
+  "oldFile": "/tmp/input.c",
+  "totalCombinations": 4,
+  "totalEnoughCombinations": 4
+}

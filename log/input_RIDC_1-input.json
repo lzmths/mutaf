@@ -1,0 +1,22 @@
+{
+  "combinations": [
+    [],
+    [
+      "A"
+    ]
+  ],
+  "enoughCombinations": [
+    []
+  ],
+  "features": [
+    "B",
+    "A"
+  ],
+  "impactedFeatures": [
+    "A"
+  ],
+  "newFile": "/tmp/input.c",
+  "oldFile": "/tmp/input_RIDC_1.c",
+  "totalCombinations": 2,
+  "totalEnoughCombinations": 1
+}

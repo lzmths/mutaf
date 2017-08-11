@@ -22,6 +22,11 @@ import br.edu.ufal.ic.easy.cppmt.util.xml.DocumentClone;
 public class RCFD implements MutationOperator {
 
 	@Override
+	public String getInfo() {
+		return "Remove";
+	}
+	
+	@Override
 	public List<Mutation> run(Document document) {
 		List<Mutation> lDocument = new ArrayList<Mutation>();
 		Document originalDocument = DocumentClone.clone(document);

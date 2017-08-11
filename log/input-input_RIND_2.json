@@ -1,0 +1,36 @@
+{
+  "combinations": [
+    [],
+    [
+      "B"
+    ],
+    [
+      "A"
+    ],
+    [
+      "B",
+      "A"
+    ]
+  ],
+  "enoughCombinations": [
+    [
+      "A"
+    ],
+    [
+      "B",
+      "A"
+    ]
+  ],
+  "features": [
+    "B",
+    "A"
+  ],
+  "impactedFeatures": [
+    "B",
+    "A"
+  ],
+  "newFile": "/tmp/input_RIND_2.c",
+  "oldFile": "/tmp/input.c",
+  "totalCombinations": 4,
+  "totalEnoughCombinations": 2
+}

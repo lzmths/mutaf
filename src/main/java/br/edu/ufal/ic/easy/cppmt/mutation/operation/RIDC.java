@@ -90,7 +90,7 @@ public class RIDC implements MutationOperator {
 			this.endifCount = 0;
 			this.ifdefSelected = startIfdefSelected + i;
 			if (removeIfdefOrIfndef(document, document.getFirstChild(), false)) {
-				lDocument.add(new Mutation(document, originalDocument, this, i));
+				lDocument.add(new Mutation(document, originalDocument, this, i + 1));
 				document = DocumentClone.clone(originalDocument);;
 			} else {
 				return lDocument;
@@ -113,4 +113,9 @@ public class RIDC implements MutationOperator {
 		return "RIDC";
 	}
 
+	@Override
+	public String getInfo() {
+		return "Remove";
+	}
+	
 }

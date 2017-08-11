@@ -22,6 +22,11 @@ import br.edu.ufal.ic.easy.cppmt.util.xml.DocumentClone;
 public class AICC implements MutationOperator {
 	
 	@Override
+	public String getInfo() {
+		return "Add";
+	}
+	
+	@Override
 	public List<Mutation> run(Document document) {
 		Document originalDocument = DocumentClone.clone(document);
 		FeatureParser fParser = new FeatureParser();

@@ -24,6 +24,11 @@ import br.edu.ufal.ic.easy.cppmt.util.xml.DocumentClone;
 public class RIND implements MutationOperator {
 	
 	@Override
+	public String getInfo() {
+		return "Replace";
+	}
+	
+	@Override
 	public List<Mutation> run(Document document) {
 		List<Mutation> lDocument = new ArrayList<Mutation>();
 		Document originalDocument = DocumentClone.clone(document);
@@ -40,7 +45,7 @@ public class RIND implements MutationOperator {
 					Node nDirective = nlDirectives.item(0);
 					nDirective.setTextContent("ifndef");
 				}
-				lDocument.add(new Mutation(document, originalDocument, this, i));
+				lDocument.add(new Mutation(document, originalDocument, this, i + 1));
 				document = DocumentClone.clone(originalDocument);
 			}
 		}	

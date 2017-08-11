@@ -25,6 +25,11 @@ public class RCIB implements MutationOperator {
 	private int endifCount;
 	private int selectedIfdefAndIfndef;
 	
+	@Override
+	public String getInfo() {
+		return "Remove";
+	}
+	
 	/**
 	 * Remove node
 	 * @param node node

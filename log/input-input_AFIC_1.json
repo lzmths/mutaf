@@ -1,0 +1,29 @@
+{
+  "combinations": [
+    [],
+    [
+      "A"
+    ],
+    [
+      "D"
+    ],
+    [
+      "A",
+      "D"
+    ]
+  ],
+  "enoughCombinations": [],
+  "features": [
+    "B",
+    "A",
+    "D"
+  ],
+  "impactedFeatures": [
+    "A",
+    "D"
+  ],
+  "newFile": "/tmp/input_AFIC_1.c",
+  "oldFile": "/tmp/input.c",
+  "totalCombinations": 4,
+  "totalEnoughCombinations": 0
+}
