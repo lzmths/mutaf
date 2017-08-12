@@ -56,7 +56,7 @@ public class AFIC implements MutationOperator {
 				Node currentNode = nList.item(i);
 				Node exprNode = this.getChildWithName("expr", currentNode);
 				exprNode.appendChild(createNode("operator", " && ", document));
-				exprNode.appendChild(createCallNode(document, features.get(i)));
+				exprNode.appendChild(createCallNode(document, features.get(j)));
 				result.add(new Mutation(document, originalDocument, this, id++));
 				document = DocumentClone.clone(originalDocument);
 				nList = document.getDocumentElement().getElementsByTagName("cpp:if");

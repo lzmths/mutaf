@@ -3,6 +3,8 @@ bin/
 .classpath
 .settings/
 
+.log/
+
 .idea/
 *.iml
 .gradle

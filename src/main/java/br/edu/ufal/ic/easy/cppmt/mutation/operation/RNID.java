@@ -44,7 +44,7 @@ public class RNID implements MutationOperator {
 					Node nDirective = nlDirectives.item(0);
 					nDirective.setTextContent("ifdef");
 				}
-				lDocument.add(new Mutation(document, originalDocument, this, i));
+				lDocument.add(new Mutation(document, originalDocument, this, i + 1));
 				document = DocumentClone.clone(originalDocument);
 			}
 		}	
