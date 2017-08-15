@@ -3,7 +3,7 @@ bin/
 .classpath
 .settings/
 
-.log/
+log/
 
 .idea/
 *.iml
