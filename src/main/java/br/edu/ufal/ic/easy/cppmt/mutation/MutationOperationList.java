@@ -86,5 +86,5 @@ public class MutationOperationList implements Iterator<MutationOperator> {
 		}
 		return null;
 	}
-	
+
 }

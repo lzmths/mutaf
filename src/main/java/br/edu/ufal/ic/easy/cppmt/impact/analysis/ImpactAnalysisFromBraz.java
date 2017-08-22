@@ -33,7 +33,6 @@ public class ImpactAnalysisFromBraz implements ImpactAnalysisAlgorithm {
 						file2.getAbsolutePath();
 		Process p;
 		try {
-			System.out.println(command);
 			p = Runtime.getRuntime().exec(command);
 	        BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			String line;

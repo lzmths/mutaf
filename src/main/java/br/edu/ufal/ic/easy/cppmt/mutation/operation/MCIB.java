@@ -70,10 +70,12 @@ public class MCIB implements MutationOperator{
 				if (this.endifCount == this.ifdefAndIfndefAndIfCount) {
 					if (afterSiblingNode == null) return false;
 					if (before) {
+						if (this.beforeIfdefNodeSelected == null || afterSiblingNode == null) return false;
 						node.getParentNode().insertBefore(this.beforeIfdefNodeSelected, afterSiblingNode);
 						node.getParentNode().insertBefore(this.blankLine.cloneNode(true), afterSiblingNode);
 						return true;
 					} else {
+						if (afterSiblingNode == null || this.IfdefNodeSelected == null) return false;
 						node.getParentNode().insertBefore(afterSiblingNode.cloneNode(true), this.IfdefNodeSelected);
 						node.getParentNode().insertBefore(this.blankLine.cloneNode(true), this.IfdefNodeSelected);
 						removeNode(afterSiblingNode);
@@ -135,13 +137,15 @@ public class MCIB implements MutationOperator{
 				elem.getElementsByTagName("cpp:if").getLength();
 		for (int i = 0, j = 0; i < candidates; ++i) {
 			resetFields(i + 1, document);
-			movingIfdefAndIfndefAndIf(document.getFirstChild(), null, null, true);
-			result.add(new Mutation(document, originalDocument, this, ++j));
+			if (movingIfdefAndIfndefAndIf(document.getFirstChild(), null, null, true)) {
+				result.add(new Mutation(document, originalDocument, this, ++j));
+			}
 			document = DocumentClone.clone(originalDocument);
 			
 			resetFields(i + 1, document);
-			movingIfdefAndIfndefAndIf(document.getFirstChild(), null, null, false);
-			result.add(new Mutation(document, originalDocument, this, ++j));
+			if (movingIfdefAndIfndefAndIf(document.getFirstChild(), null, null, false)) {
+				result.add(new Mutation(document, originalDocument, this, ++j));
+			}
 			document = DocumentClone.clone(originalDocument);
 		}
 		return result;

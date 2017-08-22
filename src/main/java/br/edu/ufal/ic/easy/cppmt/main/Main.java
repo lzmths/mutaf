@@ -36,6 +36,7 @@ public class Main {
 					File mutationFile = io.write(new File(fileToPath), m);
 					m.setMutationFile(mutationFile);
 					m.setOriginalFile(originalFile);
+					System.out.println("mutation: " + mutationFile);
 					m.runImpactAnalysisAlgorithmByMutation(new ImpactAnalysisFromBraz());
 					ioRecommendedFeatures.write(m);
 				}
