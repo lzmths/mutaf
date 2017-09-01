@@ -71,11 +71,13 @@ public class MCIB implements MutationOperator{
 					if (afterSiblingNode == null) return false;
 					if (before) {
 						if (this.beforeIfdefNodeSelected == null || afterSiblingNode == null) return false;
+						if (!this.beforeIfdefNodeSelected.getOwnerDocument().equals(afterSiblingNode.getOwnerDocument())) return false;
 						node.getParentNode().insertBefore(this.beforeIfdefNodeSelected, afterSiblingNode);
 						node.getParentNode().insertBefore(this.blankLine.cloneNode(true), afterSiblingNode);
 						return true;
 					} else {
 						if (afterSiblingNode == null || this.IfdefNodeSelected == null) return false;
+						if (!this.IfdefNodeSelected.getOwnerDocument().equals(afterSiblingNode.getOwnerDocument())) return false;
 						node.getParentNode().insertBefore(afterSiblingNode.cloneNode(true), this.IfdefNodeSelected);
 						node.getParentNode().insertBefore(this.blankLine.cloneNode(true), this.IfdefNodeSelected);
 						removeNode(afterSiblingNode);
@@ -148,6 +150,7 @@ public class MCIB implements MutationOperator{
 			}
 			document = DocumentClone.clone(originalDocument);
 		}
+		
 		return result;
 	}
 
