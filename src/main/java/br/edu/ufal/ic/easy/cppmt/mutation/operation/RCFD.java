@@ -1,7 +1,6 @@
 package br.edu.ufal.ic.easy.cppmt.mutation.operation;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -27,8 +26,7 @@ public class RCFD implements MutationOperator {
 	}
 	
 	@Override
-	public List<Mutation> run(Document document) {
-		List<Mutation> lDocument = new ArrayList<Mutation>();
+	public void run(Document document, File originalFile) {
 		Document originalDocument = DocumentClone.clone(document);
 	
 		final int size = document.getDocumentElement().getElementsByTagName("cpp:define").getLength();
@@ -38,11 +36,11 @@ public class RCFD implements MutationOperator {
 			NodeList nList = document.getDocumentElement().getElementsByTagName("cpp:define");
 			Node parent = nList.item(i).getParentNode();
 			parent.removeChild(nList.item(i));
-			lDocument.add(new Mutation(document, originalDocument, this, id++));
+			Mutation mutation = new Mutation(document, originalDocument, this, id++);
+			mutation.writeToFile(originalFile);
+			System.out.println("mutation: " + mutation.getMutationFile().getAbsolutePath());
 			document = DocumentClone.clone(originalDocument);
-		}
-		
-		return lDocument;
+		}		
 	}
 
 	@Override

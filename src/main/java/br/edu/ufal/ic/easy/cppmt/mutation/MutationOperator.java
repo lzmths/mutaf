@@ -1,6 +1,6 @@
 package br.edu.ufal.ic.easy.cppmt.mutation;
 
-import java.util.List;
+import java.io.File;
 
 import org.w3c.dom.Document;
 
@@ -14,7 +14,7 @@ import org.w3c.dom.Document;
 public interface MutationOperator {
 
 	/**
-	 * Get info like Mutation operation add, eplace or remove.
+	 * Get info like Mutation operation add, replace or remove.
 	 */
 	public String getInfo();
 	
@@ -23,7 +23,7 @@ public interface MutationOperator {
 	 * @param document
 	 * @return mutants
 	 */
-	public List<Mutation> run(Document document);
+	public void run(Document document, File originalFile);
 	
 	/**
 	 * Return mutation operator name

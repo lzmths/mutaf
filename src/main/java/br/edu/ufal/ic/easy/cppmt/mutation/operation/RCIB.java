@@ -1,7 +1,6 @@
 package br.edu.ufal.ic.easy.cppmt.mutation.operation;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -73,8 +72,7 @@ public class RCIB implements MutationOperator {
 	}
 	
 	@Override
-	public List<Mutation> run(Document document) {
-		List<Mutation> result = new ArrayList<Mutation>();
+	public void run(Document document, File originalFile) {
 		Document originalDocument = DocumentClone.clone(document);
 		final int ifdefAndIfndefSize = document.getDocumentElement().getElementsByTagName("cpp:ifdef").getLength() 
 				+ document.getDocumentElement().getElementsByTagName("cpp:ifndef").getLength();		
@@ -83,13 +81,14 @@ public class RCIB implements MutationOperator {
 			this.endifCount = 0;
 			this.selectedIfdefAndIfndef = i + 1;
 			if (removeIfdefAndIfndefBlock(document.getFirstChild())) {
-				result.add(new Mutation(document, originalDocument, this, i));
+				Mutation mutation = new Mutation(document, originalDocument, this, i + 1);
+				mutation.writeToFile(originalFile);
+				System.out.println("mutation: " + mutation.getMutationFile().getAbsolutePath());
 				document = DocumentClone.clone(originalDocument);
 			} else {
 				break;
 			}
 		}
-		return result;
 	}
 
 	@Override

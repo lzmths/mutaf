@@ -1,6 +1,6 @@
 package br.edu.ufal.ic.easy.cppmt.mutation.operation;
 
-import java.util.ArrayList;
+import java.io.File;
 import java.util.List;
 
 import org.w3c.dom.Document;
@@ -27,11 +27,10 @@ public class AICC implements MutationOperator {
 	}
 	
 	@Override
-	public List<Mutation> run(Document document) {
+	public void run(Document document, File originalFile) {
 		Document originalDocument = DocumentClone.clone(document);
 		FeatureParser fParser = new FeatureParser();
 		List<String> features = fParser.parser(document);
-		List<Mutation> lDocument = new ArrayList<Mutation>();
 		final int size = document.getDocumentElement().getElementsByTagName("function").getLength();
 		AddCppAroundCode add = new AddCppAroundCode();
 		final int cppSize = 2;
@@ -51,12 +50,13 @@ public class AICC implements MutationOperator {
 						add.createIfndef(featureStr, currentNode, document);
 					}
 					add.createEndif(nList, sibling, document);
-					lDocument.add(new Mutation(document, originalDocument, this, id++));
+					Mutation mutation = new Mutation(document, originalDocument, this, id++);
+					mutation.writeToFile(originalFile);
+					System.out.println("mutation: " + mutation.getMutationFile().getAbsolutePath());
 					document = DocumentClone.clone(originalDocument);
 				}
 			}
 		}
-		return lDocument;
 	}
 
 	@Override

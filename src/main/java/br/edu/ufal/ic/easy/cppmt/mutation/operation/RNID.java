@@ -1,7 +1,6 @@
 package br.edu.ufal.ic.easy.cppmt.mutation.operation;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -28,8 +27,7 @@ public class RNID implements MutationOperator {
 	}
 	
 	@Override
-	public List<Mutation> run(Document document) {
-		List<Mutation> lDocument = new ArrayList<Mutation>();
+	public void run(Document document, File originalFile) {
 		Document originalDocument = DocumentClone.clone(document);
 		
 		final int size = originalDocument.getDocumentElement().getElementsByTagName("cpp:ifndef").getLength();
@@ -44,11 +42,12 @@ public class RNID implements MutationOperator {
 					Node nDirective = nlDirectives.item(0);
 					nDirective.setTextContent("ifdef");
 				}
-				lDocument.add(new Mutation(document, originalDocument, this, i + 1));
+				Mutation mutation = new Mutation(document, originalDocument, this, i + 1);
+				mutation.writeToFile(originalFile);
+				System.out.println("mutation: " + mutation.getMutationFile().getAbsolutePath());
 				document = DocumentClone.clone(originalDocument);
 			}
 		}	
-		return lDocument;
 	}
 
 	@Override

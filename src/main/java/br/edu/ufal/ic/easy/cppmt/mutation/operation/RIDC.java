@@ -1,7 +1,6 @@
 package br.edu.ufal.ic.easy.cppmt.mutation.operation;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -76,8 +75,7 @@ public class RIDC implements MutationOperator {
 	}
 
 	@Override
-	public List<Mutation> run(Document originalDocument) {
-		List<Mutation> lDocument = new ArrayList<Mutation>();
+	public void run(Document originalDocument, File originalFile) {
 		final int ifdefAndIfndefSize = originalDocument.getDocumentElement().getElementsByTagName("cpp:ifdef").getLength() + 
 				originalDocument.getDocumentElement().getElementsByTagName("cpp:ifndef").getLength() + 
 				originalDocument.getDocumentElement().getElementsByTagName("cpp:if").getLength();
@@ -86,7 +84,7 @@ public class RIDC implements MutationOperator {
 		
 		if (endifSize != ifdefAndIfndefSize) {
 			System.err.println("Problem with size of ifdef, ifndef and endif");
-			return lDocument;
+			return;
 		}
 		
 		for (int i = 0; i < ifdefAndIfndefSize; ++i) {
@@ -96,13 +94,15 @@ public class RIDC implements MutationOperator {
 			this.endifCount = 0;
 			this.ifdefSelected = startIfdefSelected + i;
 			if (removeIfdefOrIfndef(document, document.getFirstChild(), false)) {
-				lDocument.add(new Mutation(document, originalDocument, this, i + 1));
+				Mutation mutation = new Mutation(document, originalDocument, this, i + 1);
+				mutation.writeToFile(originalFile);
+				System.out.println("mutation: " + mutation.getMutationFile().getAbsolutePath());
 				document = DocumentClone.clone(originalDocument);;
 			} else {
-				return lDocument;
+				return;
 			}
 		}
-		return lDocument;
+		return;
 	}
 	
 	/**

@@ -6,6 +6,7 @@ import java.util.List;
 import org.w3c.dom.Document;
 
 import br.edu.ufal.ic.easy.cppmt.impact.analysis.ImpactAnalysisAlgorithm;
+import br.edu.ufal.ic.easy.cppmt.io.xml.IOXML;
 import br.edu.ufal.ic.easy.cppmt.util.xml.DocumentClone;
 
 /**
@@ -139,6 +140,18 @@ public class Mutation {
 			this.featuresImpacted = this.impactAnalysisAlgorithm.run(getOriginalFile(), getMutationFile(), mutationOperation.getInfo());
 			this.runnedImpactAnalyzer = true;
 		}
+	}
+	
+	public void writeToFile() {
+		IOXML io = new IOXML();
+		if (this.originalFile == null) System.err.println("Please. Set original file\n");
+		File mutationFile = io.write(this.originalFile, this);
+		this.setMutationFile(mutationFile);
+	}
+	
+	public void writeToFile(File originalFile) {
+		this.setOriginalFile(originalFile);
+		writeToFile();
 	}
 	
 }

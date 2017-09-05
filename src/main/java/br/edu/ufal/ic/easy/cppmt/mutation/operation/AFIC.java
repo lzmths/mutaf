@@ -1,6 +1,6 @@
 package br.edu.ufal.ic.easy.cppmt.mutation.operation;
 
-import java.util.ArrayList;
+import java.io.File;
 import java.util.List;
 
 import org.w3c.dom.Document;
@@ -45,8 +45,8 @@ public class AFIC implements MutationOperator {
 	}
 	
 	@Override
-	public List<Mutation> run(Document document) {
-		List<Mutation> result = new ArrayList<Mutation>();
+	public void run(Document document, File originalFile) {
+		//List<Mutation> result = new ArrayList<Mutation>();
 		List<String> features = new FeatureParser().parser(document);
 		Document originalDocument = DocumentClone.clone(document);
 		NodeList nList = document.getDocumentElement().getElementsByTagName("cpp:if");
@@ -57,12 +57,14 @@ public class AFIC implements MutationOperator {
 				Node exprNode = this.getChildWithName("expr", currentNode);
 				exprNode.appendChild(createNode("operator", " && ", document));
 				exprNode.appendChild(createCallNode(document, features.get(j)));
-				result.add(new Mutation(document, originalDocument, this, id++));
+				Mutation mutation = new Mutation(document, originalDocument, this, id++);
+				mutation.writeToFile(originalFile);
+				System.out.println("mutation: " + mutation.getMutationFile().getAbsolutePath());
 				document = DocumentClone.clone(originalDocument);
 				nList = document.getDocumentElement().getElementsByTagName("cpp:if");
 			}
 		}
-		return result;
+		//return result;
 	}
 
 	/**

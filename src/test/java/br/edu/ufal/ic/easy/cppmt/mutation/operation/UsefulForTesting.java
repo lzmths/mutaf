@@ -11,7 +11,6 @@ import java.util.List;
 import org.w3c.dom.Document;
 
 import br.edu.ufal.ic.easy.cppmt.io.xml.IOXML;
-import br.edu.ufal.ic.easy.cppmt.mutation.Mutation;
 import br.edu.ufal.ic.easy.cppmt.mutation.MutationOperator;
 
 /**
@@ -34,19 +33,24 @@ public class UsefulForTesting {
 		IOXML io = new IOXML();
 		List<String> result = new ArrayList<String>();
 		Document doc = io.read(file);
-		List<Mutation> mts = mOperator.run(io.read(file));
-		for (Mutation mutation : mts) {
-			File mtResultFile = io.write(file, mutation);
-			BufferedReader brMt = new BufferedReader(new FileReader(mtResultFile));
-			String line, mtStr;
-			mtStr = "";
-			while ((line = brMt.readLine()) != null) {
-				mtStr = mtStr + line;
+		mOperator.run(doc, file);
+		for (int i = 1; ; ++i) {
+			String str = file.getAbsolutePath().replace(".c", "_" + mOperator.getName() + "_" + i + ".c");
+			File mFile = new File(str);
+			if (mFile.exists()) {
+				BufferedReader brMt = new BufferedReader(new FileReader(mFile));
+				String line, mtStr;
+				mtStr = "";
+				while ((line = brMt.readLine()) != null) {
+					mtStr = mtStr + line;
+				}
+				result.add(mtStr);
+				brMt.close();
+				mFile.deleteOnExit();
+			} else {
+				break;
 			}
-			result.add(mtStr);
-			brMt.close();
-			mtResultFile.deleteOnExit();
-		} 
+		}
 		return result;
 	}
 	

@@ -1,7 +1,6 @@
 package br.edu.ufal.ic.easy.cppmt.mutation;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
 
 import org.w3c.dom.Document;
 
@@ -36,15 +35,13 @@ public class MutationOperationRunner {
 	 * @return mutations
 	 * @throws MutationOperationException
 	 */
-	public List<Mutation> runTo(Document document) throws MutationOperationException {
-		List<Mutation> mutationsAll = new ArrayList<Mutation>();
+	public void runTo(Document document, File originalFile) throws MutationOperationException {
 		while (this.mOperationSelector.hasNext()) {
 			MutationOperator mutationOperator = this.mOperationSelector.next();
-			List<Mutation> mutations = mutationOperator.run(DocumentClone.clone(document));
-			mutationsAll.addAll(mutations);
+			System.out.println("Running: " + mutationOperator.getName());
+			mutationOperator.run(DocumentClone.clone(document), originalFile);
 			System.out.println("Runned: " + mutationOperator.getName());
 		}
-		return mutationsAll;
 	}
 	
 }
