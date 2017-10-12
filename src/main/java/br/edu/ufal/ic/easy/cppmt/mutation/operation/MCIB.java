@@ -11,6 +11,7 @@ import org.w3c.dom.NodeList;
 import br.edu.ufal.ic.easy.cppmt.mutation.Mutation;
 import br.edu.ufal.ic.easy.cppmt.mutation.MutationOperator;
 import br.edu.ufal.ic.easy.cppmt.util.xml.DocumentClone;
+import br.edu.ufal.ic.easy.cppmt.util.xml.Remove;
 
 /**
  * 
@@ -140,6 +141,8 @@ public class MCIB implements MutationOperator{
 	
 	@Override
 	public void run(Document document, File originalFile) {
+		Remove remove = new Remove();
+		document = remove.comments(document);
 		Document originalDocument = DocumentClone.clone(document);
 		Element elem = document.getDocumentElement();
 		final int candidates = elem.getElementsByTagName("cpp:ifdef").getLength() + elem.getElementsByTagName("cpp:ifndef").getLength() +

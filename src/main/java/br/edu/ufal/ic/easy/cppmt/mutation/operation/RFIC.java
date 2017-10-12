@@ -57,7 +57,8 @@ public class RFIC implements MutationOperator {
 		int operatorCount = 0;
 		for (int i = 0; i < childNodes.getLength(); ++i) {
 			Node node = childNodes.item(i);
-			if (node.getNodeName().equals("call")) {
+			//if (node.getNodeName().equals("call")) {
+			if (node.getNodeName().equals("call") || node.getNodeName().equals("name")) {
 				++callCount;
 				if (callCount == 2) {
 					expr.removeChild(node);
