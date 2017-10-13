@@ -7,15 +7,28 @@ import org.w3c.dom.NodeList;
 public class Remove {
 	
 	/**
+	 * Removes comments inside the main block
+	 * @param nodeList removes comments this list and all the elements within
+	 */
+	private void removeCommentsRecursive(NodeList nodeList) {
+		Node node;
+		for (int i = 0; i < nodeList.getLength(); ++i) {
+			node = nodeList.item(i);
+			if (node.getNodeName().equals("comment")) {
+				node(node);
+			}
+			NodeList newChildren = node.getChildNodes();
+			removeCommentsRecursive(newChildren);
+		}
+	}
+	
+	/**
 	 * Removes all comments
 	 * @param document document
 	 * @return document without comments
 	 */
 	public Document comments(Document document) {
-		NodeList nodeList = document.getDocumentElement().getElementsByTagName("comment");
-		for (int i = 0; i < nodeList.getLength(); ++i) {
-			node(nodeList.item(i));
-		}
+		removeCommentsRecursive(document.getChildNodes());
 		return document;
 	}
 	
