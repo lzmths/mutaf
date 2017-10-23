@@ -63,7 +63,7 @@ public class RCFD implements MutationOperator {
 					if (childNodeName.equals("cpp:ifdef") || childNodeName.equals("cpp:ifndef") 
 							|| childNodeName.equals("cpp:if")) {
 						++conditionNesting;
-					} else if (childNode.equals("cpp:endif"))  {
+					} else if (childNodeName.equals("cpp:endif"))  {
 						--conditionNesting;
 					}
 					if (removeDefineInsideCondition(doc, childNode)) {
