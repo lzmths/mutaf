@@ -1,4 +1,4 @@
-# CPPMT
+# #mutaf
 A tool about Mutation Testing in CPP (C preprocessor). <br>
 This tools implements some mutation operations from Mutation Operators for Preprocessor-Based Variability (Mustafa Al-Hajjaji et al). <br>
 <br>
