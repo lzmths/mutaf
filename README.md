@@ -5,7 +5,7 @@ This tools implements some mutation operations from Mutation Operators for Prepr
 <br>
 You need Java 7 (or higher), Python 3 and srcml (www.srcml.org) <br>
 <br>
-You can call CPPMT like this: <br>
+You can call #mutaf like this: <br>
 ./mutaf -mutations mutations-names -file path-to-file <br>
 e.g: <br>
 ./mutaf -mutations MCIB AFIC -file /tmp/input.c
